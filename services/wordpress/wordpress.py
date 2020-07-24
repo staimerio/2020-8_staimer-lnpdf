@@ -15,6 +15,7 @@ from retic.services.responses import error_response_service, success_response_se
 # Constants
 URL_API_BASE = app.apps['backend']['lnpdf']['base_url']
 URL_API_BASE_POSTS = URL_API_BASE+"/posts"
+WP_POST_STATUS = app.config.get('WP_POST_STATUS'),
 
 
 OAUTH_SESSION = OAuth1(
@@ -85,7 +86,7 @@ def create_post(
             "content": content,
             "title": title,
             "excerpt": excerpt,
-            "status": "draft",
+            "status": WP_POST_STATUS,
             "categories": _categories_id,
             "tags": _tags_id,
 
