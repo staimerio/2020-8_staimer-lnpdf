@@ -10,6 +10,7 @@ router = Router()
 """Define all paths - posts"""
 router \
     .post("/posts", wordpress.create_post) \
+    .get("/posts", wordpress.get_all_search) \
 
 """Define all paths - posts/:post_id"""
 router \

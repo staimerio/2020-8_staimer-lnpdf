@@ -94,3 +94,27 @@ def get_post_by_id(req: Request, res: Response, next: Next):
                 msg='Post found.'
             )
         )
+
+
+def get_all_search(req: Request, res: Response):
+    if req.param('slug'):
+        return get_by_slug(req, res)
+    return res.bad_request("Bad request")
+
+
+def get_by_slug(req: Request, res: Response):
+    """Get all novel from latests page"""
+    _post = wordpress.get_post_by_slug(
+        slug=req.param('slug')
+    )
+    """Check if exist an error"""
+    if _post['valid'] is False:
+        return res.not_found(_post)
+    else:
+        """Response the data to client"""
+        res.ok(
+            success_response_service(
+                data=_post['data'],
+                msg='Post found.'
+            )
+        )

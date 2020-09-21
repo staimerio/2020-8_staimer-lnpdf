@@ -174,3 +174,31 @@ def create_resources_from_list(items, resource):
                 "data" in _value) else _value['id']
         )
     return _items
+
+
+def get_post_by_slug(
+    slug
+):
+    try:
+        """Prepare payload"""
+        _payload = {
+            u"slug": slug
+        }
+        """Update a post"""
+        _req_post = requests.get(
+            URL_API_BASE_POSTS,
+            auth=OAUTH_SESSION,
+            params=_payload
+        )
+        """Check if it has results"""
+        _posts = _req_post.json()
+        if not _posts:
+            raise Exception("Post not found")
+        """Return the created post"""
+        return success_response_service(
+            data=_posts.pop()
+        )
+    except Exception as err:
+        return error_response_service(
+            msg=str(err)
+        )
